@@ -4,7 +4,7 @@
 ##
 ###################################################################################################
 
-cmake_minimum_required(VERSION 3.8.2)
+cmake_minimum_required(VERSION 3.13)
 project(Mylib VERSION 1.0 LANGUAGES CXX)
 
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
