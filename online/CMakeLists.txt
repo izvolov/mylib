@@ -4,11 +4,11 @@ find_program(PYTHON3_EXECUTABLE python3)
 if(PYTHON3_EXECUTABLE)
     add_custom_target(wandbox
         COMMAND
-            ${PYTHON3_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/generate-wandbox.py"
-                "${CMAKE_CURRENT_SOURCE_DIR}/mylib-example.cpp"
-                "${PROJECT_SOURCE_DIR}"
-                include |
+            ${PYTHON3_EXECUTABLE} generate-wandbox.py
+                mylib-example.cpp "${PROJECT_SOURCE_DIR}" include |
             curl -H "Content-type: application/json" -d @- ${WANDBOX_URL}
+        WORKING_DIRECTORY
+            ${CMAKE_CURRENT_SOURCE_DIR}
         DEPENDS
             mylib-unit-tests
     )
