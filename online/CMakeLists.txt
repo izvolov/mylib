@@ -1,7 +1,7 @@
-set(WANDBOX_URL "https://wandbox.org/api/compile.json")
-
 find_program(PYTHON3_EXECUTABLE python3)
 if(PYTHON3_EXECUTABLE)
+    set(WANDBOX_URL "https://wandbox.org/api/compile.json")
+
     add_custom_target(wandbox
         COMMAND
             ${PYTHON3_EXECUTABLE} wandbox.py mylib-example.cpp "${PROJECT_SOURCE_DIR}" include |
