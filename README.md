@@ -22,6 +22,7 @@
     6.  [wandbox](#wandbox)
 4.  [Примеры](#примеры)
 5.  [Инструменты](#инструменты)
+6.  [Бонус](#бонус)
 
 Сборка
 ------
@@ -182,3 +183,31 @@ cmake --build путь/к/сборочной/директории --target doc
 4.  Интерпретатор ЯП [Python 3](https://www.python.org)
 
     Для автоматической генерации [онлайн-песочницы](#wandbox).
+
+Бонус
+-----
+
+С помощью CMake и пары хороших инструментов можно обеспечить статический анализ с минимальными телодвижениями.
+
+### Cppcheck
+
+В CMake встроена поддержка инструмента для статического анализа [Cppcheck](http://cppcheck.sourceforge.net).
+
+Для этого нужно воспользоваться опцией [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.10/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK):
+
+```shell
+cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_CPPCHECK="cppcheck;--enable=all;-Iпуть/к/исходникам/include"
+```
+
+После этого статический анализ будет автоматически запускаться каждый раз во время компиляции и перекомпиляции исходников. Ничего дополнительного делать не нужно.
+
+### Clang
+
+При помощи чудесного инструмента [`scan-build`](https://clang-analyzer.llvm.org/scan-build) тоже можно запускать статический анализ в два счёта:
+
+```shell
+scan-build cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Debug
+scan-build cmake --build путь/к/сборочной/директории
+```
+
+Здесь, в отличие от случая с [Cppcheck](#cppcheck), требуется каждый раз запускать сборку через `scan-build`.
