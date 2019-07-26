@@ -3,6 +3,26 @@
 
 Скопировать, поменять "Mylib" на нужное название — и в путь.
 
+Содержание
+----------
+
+1.  [Сборка](#сборка)
+    1.  [Генерация](#генерация)
+    2.  [Сборка](#сборка-проекта)
+2.  [Опции](#опции)
+    1.  [MYLIB_COVERAGE](#MYLIB_COVERAGE)
+    2.  [MYLIB_TESTING](#MYLIB_TESTING)
+    3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
+3.  [Сборочные цели](#сборочные-цели)
+    1.  [По-умолчанию](#по-умолчанию)
+    2.  [mylib-unit-tests](#mylib-unit-tests)
+    3.  [check](#check)
+    4.  [coverage](#coverage)
+    5.  [doc](#doc)
+    6.  [wandbox](#wandbox)
+4.  [Примеры](#примеры)
+5.  [Инструменты](#инструменты)
+
 Сборка
 ------
 
