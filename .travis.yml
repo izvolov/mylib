@@ -1,0 +1,69 @@
+language: cpp
+
+.bionic-job-template: &bionic-job
+  os: linux
+  dist: bionic
+  install:
+  - sudo apt update
+  - sudo apt install --yes git cmake $COMPILER_PACKAGE
+
+  - git clone https://github.com/onqtam/doctest.git third_party/doctest
+  - git -C third_party/doctest checkout 2.3.3
+  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - sudo cmake --build Build/third_party/doctest --target install/fast
+  script:
+  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - cmake --build Build/mylib --target check
+
+.macos-job-template: &macos-job
+  os: osx
+  compiler: clang
+  addons:
+    homebrew:
+      packages:
+      - cmake
+  install:
+  - git clone https://github.com/onqtam/doctest.git third_party/doctest
+  - git -C third_party/doctest checkout 2.3.3
+  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release
+  - sudo cmake --build Build/third_party/doctest --target install/fast
+  script:
+  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake --build Build/mylib --target check
+
+.coverage-job-template: &coverage-job
+  os: linux
+  dist: bionic
+  install:
+  - sudo apt update
+  - sudo apt install --yes git cmake gcovr python-pip
+
+  - pip install --user cpp-coveralls
+
+  - git clone https://github.com/onqtam/doctest.git third_party/doctest
+  - git -C third_party/doctest checkout 2.3.3
+  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - sudo cmake --build Build/third_party/doctest --target install/fast
+  script:
+  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
+  - cmake --build Build/mylib --target coverage
+  after_success:
+  - coveralls --root . --build-root Build/mylib --include include
+
+matrix:
+  include:
+  - <<: *bionic-job
+    env: COMPILER_PACKAGE=clang-7 COMPILER_NAME=clang++-7 BUILD_TYPE=Debug
+  - <<: *bionic-job
+    env: COMPILER_PACKAGE=clang-7 COMPILER_NAME=clang++-7 BUILD_TYPE=Release
+  - <<: *bionic-job
+    env: COMPILER_PACKAGE=g++-8 COMPILER_NAME=g++-8 BUILD_TYPE=Debug
+  - <<: *bionic-job
+    env: COMPILER_PACKAGE=g++-8 COMPILER_NAME=g++-8 BUILD_TYPE=Release
+  - <<: *macos-job
+    osx_image: xcode10.2
+    env: BUILD_TYPE=Debug
+  - <<: *macos-job
+    osx_image: xcode10.2
+    env: BUILD_TYPE=Release
+  - <<: *coverage-job
