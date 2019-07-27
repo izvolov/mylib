@@ -5,7 +5,8 @@
 
 Скопировать, поменять "Mylib" на нужное название — и в путь.
 
-[![Статус сборки](https://travis-ci.org/izvolov/mylib.svg?branch=master)](https://travis-ci.org/izvolov/mylib)
+[![Статус сборки](https://travis-ci.org/izvolov/mylib.svg?branch=master)](https://travis-ci.org/izvolov/mylib) [![Статус покрытия](https://coveralls.io/repos/github/izvolov/mylib/badge.svg?branch=master)](https://coveralls.io/github/izvolov/mylib?branch=master)
+
 
 Содержание
 ----------
