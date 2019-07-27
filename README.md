@@ -5,6 +5,8 @@
 
 Скопировать, поменять "Mylib" на нужное название — и в путь.
 
+[![Статус сборки](https://travis-ci.org/izvolov/mylib.svg?branch=master)](https://travis-ci.org/izvolov/mylib)
+
 Содержание
 ----------
 
