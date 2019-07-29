@@ -4,7 +4,7 @@ if(PYTHON3_EXECUTABLE)
 
     add_custom_target(wandbox
         COMMAND
-            ${PYTHON3_EXECUTABLE} wandbox.py mylib-example.cpp "${PROJECT_SOURCE_DIR}" include |
+            ${PYTHON3_EXECUTABLE} wandbox.py mylib_example.cpp "${PROJECT_SOURCE_DIR}" include |
             curl -H "Content-type: application/json" -d @- ${WANDBOX_URL}
         WORKING_DIRECTORY
             ${CMAKE_CURRENT_SOURCE_DIR}
