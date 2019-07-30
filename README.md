@@ -19,7 +19,7 @@
     2.  [MYLIB_TESTING](#MYLIB_TESTING)
     3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
 3.  [Сборочные цели](#сборочные-цели)
-    1.  [По-умолчанию](#по-умолчанию)
+    1.  [По умолчанию](#по-умолчанию)
     2.  [mylib-unit-tests](#mylib-unit-tests)
     3.  [check](#check)
     4.  [coverage](#coverage)
@@ -79,12 +79,12 @@ cmake -S ... -B ... -DMYLIB_DOXYGEN_LANGUAGE=English [прочие опции ..
 
 Переключает язык документации, которую генерирует цель [`doc`](#doc) на заданный. Список доступных языков см. на [сайте системы Doxygen](http://www.doxygen.nl/manual/config.html#cfg_output_language).
 
-По-умолчанию включён русский.
+По умолчанию включён русский.
 
 Сборочные цели
 --------------
 
-### По-умолчанию
+### По умолчанию
 
 ```shell
 cmake --build path/to/build/directory
@@ -99,7 +99,7 @@ cmake --build path/to/build/directory --target all
 cmake --build path/to/build/directory --target mylib-unit-tests
 ```
 
-Компилирует модульные тесты. Включено по-умолчанию.
+Компилирует модульные тесты. Включено по умолчанию.
 
 ### check
 
@@ -107,7 +107,7 @@ cmake --build path/to/build/directory --target mylib-unit-tests
 cmake --build путь/к/сборочной/директории --target check
 ```
 
-Запускает собранные (собирает, если ещё не) модульные тесты. Включено по-умолчанию.
+Запускает собранные (собирает, если ещё не) модульные тесты. Включено по умолчанию.
 
 См. также [`mylib-unit-tests`](#mylib-unit-tests).
 
