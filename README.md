@@ -69,7 +69,7 @@ cmake -S ... -B ... -DMYLIB_TESTING=OFF [прочие опции ...]
 
 Предоставляет возможность выключить сборку модульных тестов и цель [`check`](#check). Как следствие, выключается замер покрытия кода тестами (см. [Покрытие](#MYLIB_COVERAGE)).
 
-Также тестирование автоматически отключается в случае, если проект подключается в другой проект качестве подпроекта с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.8/command/add_subdirectory.html).
+Также тестирование автоматически отключается в случае, если проект подключается в другой проект качестве подпроекта с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
 ### MYLIB_DOXYGEN_LANGUAGE
 
@@ -173,9 +173,9 @@ cmake --build путь/к/сборочной/директории --target doc
 Инструменты
 -----------
 
-1.  [CMake](https://cmake.org) 3.13
+1.  [CMake](https://cmake.org) 3.14
 
-    На самом деле версия CMake 3.13 требуется только для запуска некоторых консольных команд, описанных в данной справке. С точки зрения синтаксиса CMake-скриптов достаточно версии 3.8, если генерацию вызывать другими способами.
+    CMake 3.14 требуется потому, что в предыдущих версиях некорректно работает команда `install(TARGETS ... EXPORT ...)`, а именно — не прописываются пути по умолчанию.
 
 2.  Библиотека тестирования [doctest](https://github.com/onqtam/doctest)
 
@@ -198,7 +198,7 @@ cmake --build путь/к/сборочной/директории --target doc
 
 В CMake встроена поддержка инструмента для статического анализа [Cppcheck](http://cppcheck.sourceforge.net).
 
-Для этого нужно воспользоваться опцией [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.10/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK):
+Для этого нужно воспользоваться опцией [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.14/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK):
 
 ```shell
 cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_CPPCHECK="cppcheck;--enable=all;-Iпуть/к/исходникам/include"

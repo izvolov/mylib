@@ -66,7 +66,7 @@ cmake -S ... -B ... -DMYLIB_TESTING=OFF [other options ...]
 
 Provides the ability to turn off unit testing and hence the [`check`](#check) target. As a result, the code coverage measurement is also turned off (see [Code coverage](#MYLIB_COVERAGE)).
 
-Also, testing is automatically disabled if the project is included to another project as a subproject using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.8/command/add_subdirectory.html) command.
+Also, testing is automatically disabled if the project is included to another project as a subproject using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html) command.
 
 ### MYLIB_DOXYGEN_LANGUAGE
 
@@ -170,9 +170,9 @@ cmake --build path/to/build/directory --target doc
 Tools
 -----
 
-1.  [CMake](https://cmake.org) 3.13
+1.  [CMake](https://cmake.org) 3.14
 
-    In fact, version 3.13 is only required to run some of the console commands described in this help. The syntax of all the CMake scripts in this project conforms to version 3.8.
+    CMake 3.14 is required because of incorrect work of the command `install(TARGETS ... EXPORT ...)`: is does not set default install paths properly.
 
 2.  [doctest](https://github.com/onqtam/doctest) testing framework
 
@@ -195,7 +195,7 @@ With CMake and a couple of good tools, you can get a static analysis with minima
 
 CMake has build-in support for [Cppcheck](http://cppcheck.sourceforge.net).
 
-It is provided by the [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.10/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK) option:
+It is provided by the [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.14/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK) option:
 
 ```shell
 cmake -S path/to/sources -B path/to/build/directory -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_CPPCHECK="cppcheck;--enable=all;-Ipath/to/sources/include"
