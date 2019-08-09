@@ -1,7 +1,7 @@
 [:ru: Оригинал](README.md)
 
-CMake-based project template for header-only C++ library
-========================================================
+CMake-based template for C++ project
+====================================
 
 Fork, replace "Mylib" with the desired name, and it's done.
 
@@ -17,11 +17,12 @@ Contents
     3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
 3.  [Targets](#targets)
     1.  [Default](#default)
-    2.  [mylib-unit-tests](#mylib-unit-tests)
-    3.  [check](#check)
-    4.  [coverage](#coverage)
-    5.  [doc](#doc)
-    6.  [wandbox](#wandbox)
+    2.  [myfeature](#myfeature)
+    3.  [mylib-unit-tests](#mylib-unit-tests)
+    4.  [check](#check)
+    5.  [coverage](#coverage)
+    6.  [doc](#doc)
+    7.  [wandbox](#wandbox)
 4.  [Examples](#examples)
 5.  [Tools](#tools)
 6.  [Bonus](#bonus)
@@ -89,6 +90,14 @@ cmake --build path/to/build/directory --target all
 ```
 
 If a target is not specified (which is equivalent to the `all` target), it builds everything possible including unit tests and also calls the [`check`](#check) target.
+
+### myfeature
+
+```shell
+cmake --build path/to/build/directory --target myfeature
+```
+
+Compiles the `myfeature` library. Enabled by default.
 
 ### mylib-unit-tests
 

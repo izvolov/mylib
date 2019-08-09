@@ -20,11 +20,12 @@
     3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
 3.  [Сборочные цели](#сборочные-цели)
     1.  [По умолчанию](#по-умолчанию)
-    2.  [mylib-unit-tests](#mylib-unit-tests)
-    3.  [check](#check)
-    4.  [coverage](#coverage)
-    5.  [doc](#doc)
-    6.  [wandbox](#wandbox)
+    2.  [myfeature](#myfeature)
+    3.  [mylib-unit-tests](#mylib-unit-tests)
+    4.  [check](#check)
+    5.  [coverage](#coverage)
+    6.  [doc](#doc)
+    7.  [wandbox](#wandbox)
 4.  [Примеры](#примеры)
 5.  [Инструменты](#инструменты)
 6.  [Бонус](#бонус)
@@ -92,6 +93,14 @@ cmake --build path/to/build/directory --target all
 ```
 
 Если цель не указана (что эквивалентно цели `all`), собирает всё, что можно, а также вызывает цель [`check`](#check).
+
+### myfeature
+
+```shell
+cmake --build путь/к/сборочной/директории --target myfeature
+```
+
+Компилирует библиотеку `myfeature`. Включено по умолчанию.
 
 ### mylib-unit-tests
 

@@ -54,7 +54,7 @@ language: cpp
   - /usr/bin/cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
   - /usr/bin/cmake --build Build/mylib --target coverage
   after_success:
-  - coveralls --root . --build-root Build/mylib --include include
+  - coveralls --root . --build-root Build/mylib --include include --include src
 
 matrix:
   include:
