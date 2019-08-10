@@ -1,7 +1,7 @@
 [:ru: Оригинал](README.md)
 
-CMake-based project template for header-only C++ library
-========================================================
+CMake-based template for C++ project
+====================================
 
 Fork, replace "Mylib" with the desired name, and it's done.
 
@@ -17,14 +17,18 @@ Contents
     3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
 3.  [Targets](#targets)
     1.  [Default](#default)
-    2.  [mylib-unit-tests](#mylib-unit-tests)
-    3.  [check](#check)
-    4.  [coverage](#coverage)
-    5.  [doc](#doc)
-    6.  [wandbox](#wandbox)
+    2.  [myfeature](#myfeature)
+    3.  [mylib-unit-tests](#mylib-unit-tests)
+    4.  [check](#check)
+    5.  [coverage](#coverage)
+    6.  [doc](#doc)
+    7.  [wandbox](#wandbox)
 4.  [Examples](#examples)
-5.  [Tools](#tools)
-6.  [Bonus](#bonus)
+5.  [Usage](#usage)
+    1.  [Through the installation](#through-the-installation)
+    2.  [As a submodule](#as-a-submodule)
+6.  [Tools](#tools)
+7.  [Bonus](#bonus)
 
 Build
 -----
@@ -66,7 +70,7 @@ cmake -S ... -B ... -DMYLIB_TESTING=OFF [other options ...]
 
 Provides the ability to turn off unit testing and hence the [`check`](#check) target. As a result, the code coverage measurement is also turned off (see [Code coverage](#MYLIB_COVERAGE)).
 
-Also, testing is automatically disabled if the project is included to another project as a subproject using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.8/command/add_subdirectory.html) command.
+Also, testing is automatically disabled if the project is included to another project as a subproject using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html) command.
 
 ### MYLIB_DOXYGEN_LANGUAGE
 
@@ -89,6 +93,14 @@ cmake --build path/to/build/directory --target all
 ```
 
 If a target is not specified (which is equivalent to the `all` target), it builds everything possible including unit tests and also calls the [`check`](#check) target.
+
+### myfeature
+
+```shell
+cmake --build path/to/build/directory --target myfeature
+```
+
+Compiles the `myfeature` library. Enabled by default.
 
 ### mylib-unit-tests
 
@@ -167,12 +179,40 @@ cmake -S path/to/sources -B path/to/build/directory -DCMAKE_BUILD_TYPE=Release -
 cmake --build path/to/build/directory --target doc
 ```
 
+Usage
+-----
+
+### Through the installation
+
+One of the ways to use the module is to install it into the system.
+
+```shell
+cmake --build path/to/build/directory --target install
+```
+
+After that, all the libraries from the `Mylib::` namespace can be used from any other project using the [`find_package`](https://cmake.org/cmake/help/v3.14/command/find_package.html) command:
+
+```cmake
+find_package(Mylib 1.0 REQUIRED)
+
+add_executable(some_executable some.cpp sources.cpp)
+target_link_libraries(some_executable PRIVATE Mylib::myfeature)
+```
+
+`Mylib::mylib` library is used for the headers only, and `Mylib::myfeature` library is used when it is also needed to link with the `libmyfeature` library.
+
+### As a submodule
+
+The project can also be used by another project as a submodule using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html) command:
+
+In this case, libraries `Mylib::myfeature` and `Mylib::mylib` will be available in the same manner.
+
 Tools
 -----
 
-1.  [CMake](https://cmake.org) 3.13
+1.  [CMake](https://cmake.org) 3.14
 
-    In fact, version 3.13 is only required to run some of the console commands described in this help. The syntax of all the CMake scripts in this project conforms to version 3.8.
+    CMake 3.14 is required because of incorrect work of the command `install(TARGETS ... EXPORT ...)`: is does not set default install paths properly.
 
 2.  [doctest](https://github.com/onqtam/doctest) testing framework
 
@@ -195,7 +235,7 @@ With CMake and a couple of good tools, you can get a static analysis with minima
 
 CMake has build-in support for [Cppcheck](http://cppcheck.sourceforge.net).
 
-It is provided by the [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.10/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK) option:
+It is provided by the [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.14/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK) option:
 
 ```shell
 cmake -S path/to/sources -B path/to/build/directory -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_CPPCHECK="cppcheck;--enable=all;-Ipath/to/sources/include"

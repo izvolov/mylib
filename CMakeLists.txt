@@ -4,7 +4,7 @@
 ##
 ###################################################################################################
 
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.14)
 project(Mylib VERSION 1.0 LANGUAGES CXX)
 
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
@@ -51,7 +51,7 @@ endif()
 
 ###################################################################################################
 ##
-##      Основная цель
+##      Заголовочная библиотека
 ##
 ###################################################################################################
 
@@ -66,13 +66,24 @@ add_library(Mylib::mylib ALIAS mylib)
 
 ###################################################################################################
 ##
+##      Компилируемая библиотека
+##
+###################################################################################################
+
+add_library(myfeature src/mylib/myfeature.cpp)
+target_link_libraries(myfeature PUBLIC mylib)
+
+add_library(Mylib::myfeature ALIAS myfeature)
+
+###################################################################################################
+##
 ##      Установка
 ##
 ###################################################################################################
 
 install(DIRECTORY include/mylib DESTINATION include)
 
-install(TARGETS mylib EXPORT MylibConfig)
+install(TARGETS mylib myfeature EXPORT MylibConfig)
 install(EXPORT MylibConfig NAMESPACE Mylib:: DESTINATION share/Mylib/cmake)
 
 include(CMakePackageConfigHelpers)

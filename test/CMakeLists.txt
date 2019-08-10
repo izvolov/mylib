@@ -4,7 +4,7 @@ add_executable(mylib-unit-tests test_main.cpp)
 target_sources(mylib-unit-tests PRIVATE mylib/myfeature.cpp)
 target_link_libraries(mylib-unit-tests
     PRIVATE
-        Mylib::mylib
+        Mylib::myfeature
         doctest::doctest
 )
 
@@ -15,11 +15,16 @@ if(MYLIB_COVERAGE AND GCOVR_EXECUTABLE)
     target_compile_options(mylib-unit-tests PRIVATE --coverage)
     target_link_libraries(mylib-unit-tests PRIVATE gcov)
 
+    target_compile_options(myfeature PRIVATE --coverage)
+    target_link_libraries(myfeature PRIVATE gcov)
+
     add_custom_target(coverage
         COMMAND
             ${GCOVR_EXECUTABLE}
-                --root=${PROJECT_SOURCE_DIR}/include/
-                --object-directory=${CMAKE_CURRENT_BINARY_DIR}
+                --root=${PROJECT_SOURCE_DIR}/
+                --filter=${PROJECT_SOURCE_DIR}/include
+                --filter=${PROJECT_SOURCE_DIR}/src
+                --object-directory=${PROJECT_BINARY_DIR}
         DEPENDS
             check
     )

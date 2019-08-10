@@ -4,16 +4,19 @@ language: cpp
   os: linux
   dist: bionic
   install:
+  - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+  - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+
   - sudo apt update
   - sudo apt install --yes git cmake $COMPILER_PACKAGE
 
   - git clone https://github.com/onqtam/doctest.git third_party/doctest
   - git -C third_party/doctest checkout 2.3.3
-  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
-  - sudo cmake --build Build/third_party/doctest --target install/fast
+  - /usr/bin/cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
-  - cmake --build Build/mylib --target check
+  - /usr/bin/cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - /usr/bin/cmake --build Build/mylib --target check
 
 .macos-job-template: &macos-job
   os: osx
@@ -35,6 +38,9 @@ language: cpp
   os: linux
   dist: bionic
   install:
+  - wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+  - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+
   - sudo apt update
   - sudo apt install --yes git cmake gcovr python-pip
 
@@ -42,13 +48,13 @@ language: cpp
 
   - git clone https://github.com/onqtam/doctest.git third_party/doctest
   - git -C third_party/doctest checkout 2.3.3
-  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
-  - sudo cmake --build Build/third_party/doctest --target install/fast
+  - /usr/bin/cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
-  - cmake --build Build/mylib --target coverage
+  - /usr/bin/cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
+  - /usr/bin/cmake --build Build/mylib --target coverage
   after_success:
-  - coveralls --root . --build-root Build/mylib --include include
+  - coveralls --root . --build-root Build/mylib --include include --include src
 
 matrix:
   include:

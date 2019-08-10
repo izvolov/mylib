@@ -20,14 +20,18 @@
     3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
 3.  [Сборочные цели](#сборочные-цели)
     1.  [По умолчанию](#по-умолчанию)
-    2.  [mylib-unit-tests](#mylib-unit-tests)
-    3.  [check](#check)
-    4.  [coverage](#coverage)
-    5.  [doc](#doc)
-    6.  [wandbox](#wandbox)
+    2.  [myfeature](#myfeature)
+    3.  [mylib-unit-tests](#mylib-unit-tests)
+    4.  [check](#check)
+    5.  [coverage](#coverage)
+    6.  [doc](#doc)
+    7.  [wandbox](#wandbox)
 4.  [Примеры](#примеры)
-5.  [Инструменты](#инструменты)
-6.  [Бонус](#бонус)
+5.  [Использование](#использование)
+    1.  [Через установку](#через-установку)
+    2.  [В качестве подмодуля](#в-качестве-подмодуля)
+6.  [Инструменты](#инструменты)
+7.  [Бонус](#бонус)
 
 Сборка
 ------
@@ -69,7 +73,7 @@ cmake -S ... -B ... -DMYLIB_TESTING=OFF [прочие опции ...]
 
 Предоставляет возможность выключить сборку модульных тестов и цель [`check`](#check). Как следствие, выключается замер покрытия кода тестами (см. [Покрытие](#MYLIB_COVERAGE)).
 
-Также тестирование автоматически отключается в случае, если проект подключается в другой проект качестве подпроекта с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.8/command/add_subdirectory.html).
+Также тестирование автоматически отключается в случае, если проект подключается в другой проект качестве подпроекта с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
 ### MYLIB_DOXYGEN_LANGUAGE
 
@@ -92,6 +96,14 @@ cmake --build path/to/build/directory --target all
 ```
 
 Если цель не указана (что эквивалентно цели `all`), собирает всё, что можно, а также вызывает цель [`check`](#check).
+
+### myfeature
+
+```shell
+cmake --build путь/к/сборочной/директории --target myfeature
+```
+
+Компилирует библиотеку `myfeature`. Включено по умолчанию.
 
 ### mylib-unit-tests
 
@@ -170,12 +182,40 @@ cmake -S путь/к/исходникам -B путь/к/сборочной/ди
 cmake --build путь/к/сборочной/директории --target doc
 ```
 
+Использование
+-------------
+
+### Через установку
+
+Один из вариантов использования модуля — установить его в систему.
+
+```shell
+cmake --build путь/к/сборочной/директории --target install
+```
+
+После этого любой другой проект, вызвав команду [`find_package`](https://cmake.org/cmake/help/v3.14/command/find_package.html), получает возможность использовать все библиотеки из пространства имён `Mylib::`:
+
+```cmake
+find_package(Mylib 1.0 REQUIRED)
+
+add_executable(some_executable some.cpp sources.cpp)
+target_link_libraries(some_executable PRIVATE Mylib::myfeature)
+```
+
+Библиотеку `Mylib::myfeature` нужно подключать тогда, когда необходимо слинковаться с библиотекой `libmyfeature`. Если достаточно заголовков, то тогда стоит использовать библиотеку `Mylib::mylib`.
+
+### В качестве подмодуля
+
+Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html):
+
+В этом случае аналогичным образом будут доступны библиотеки `Mylib::myfeature` и `Mylib::mylib`.
+
 Инструменты
 -----------
 
-1.  [CMake](https://cmake.org) 3.13
+1.  [CMake](https://cmake.org) 3.14
 
-    На самом деле версия CMake 3.13 требуется только для запуска некоторых консольных команд, описанных в данной справке. С точки зрения синтаксиса CMake-скриптов достаточно версии 3.8, если генерацию вызывать другими способами.
+    CMake 3.14 требуется потому, что в предыдущих версиях некорректно работает команда `install(TARGETS ... EXPORT ...)`, а именно — не прописываются пути по умолчанию.
 
 2.  Библиотека тестирования [doctest](https://github.com/onqtam/doctest)
 
@@ -198,7 +238,7 @@ cmake --build путь/к/сборочной/директории --target doc
 
 В CMake встроена поддержка инструмента для статического анализа [Cppcheck](http://cppcheck.sourceforge.net).
 
-Для этого нужно воспользоваться опцией [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.10/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK):
+Для этого нужно воспользоваться опцией [`CMAKE_CXX_CPPCHECK`](https://cmake.org/cmake/help/v3.14/variable/CMAKE_LANG_CPPCHECK.html#variable:CMAKE_<LANG>_CPPCHECK):
 
 ```shell
 cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_CPPCHECK="cppcheck;--enable=all;-Iпуть/к/исходникам/include"

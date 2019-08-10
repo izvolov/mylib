@@ -46,8 +46,5 @@ namespace mylib
 
         \~  \see mystruct
      */
-    inline bool myfunc (mystruct)
-    {
-        return true;
-    }
+    bool myfunc (mystruct);
 }
