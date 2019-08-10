@@ -1,10 +1,10 @@
-find_program(PYTHON3_EXECUTABLE python3)
-if(PYTHON3_EXECUTABLE)
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_FOUND)
     set(WANDBOX_URL "https://wandbox.org/api/compile.json")
 
     add_custom_target(wandbox
         COMMAND
-            ${PYTHON3_EXECUTABLE} wandbox.py mylib_example.cpp "${PROJECT_SOURCE_DIR}" include |
+            Python3::Interpreter wandbox.py mylib_example.cpp "${PROJECT_SOURCE_DIR}" include |
             curl -H "Content-type: application/json" -d @- ${WANDBOX_URL}
         WORKING_DIRECTORY
             ${CMAKE_CURRENT_SOURCE_DIR}
