@@ -206,7 +206,7 @@ target_link_libraries(some_executable PRIVATE Mylib::myfeature)
 
 ### В качестве подмодуля
 
-Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html):
+Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
 В этом случае аналогичным образом будут доступны библиотеки `Mylib::myfeature` и `Mylib::mylib`.
 
