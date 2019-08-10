@@ -24,8 +24,11 @@ Contents
     6.  [doc](#doc)
     7.  [wandbox](#wandbox)
 4.  [Examples](#examples)
-5.  [Tools](#tools)
-6.  [Bonus](#bonus)
+5.  [Usage](#usage)
+    1.  [Through the installation](#through-the-installation)
+    2.  [As a submodule](#as-a-submodule)
+6.  [Tools](#tools)
+7.  [Bonus](#bonus)
 
 Build
 -----
@@ -175,6 +178,34 @@ cmake --build path/to/build/directory --parallel 4
 cmake -S path/to/sources -B path/to/build/directory -DCMAKE_BUILD_TYPE=Release -DMYLIB_DOXYGEN_LANGUAGE=English
 cmake --build path/to/build/directory --target doc
 ```
+
+Usage
+-----
+
+### Through the installation
+
+One of the ways to use the module is to install it into the system.
+
+```shell
+cmake --build path/to/build/directory --target install
+```
+
+After that, all the libraries from the `Mylib::` namespace can be used from any other project using the [`find_package`](https://cmake.org/cmake/help/v3.14/command/find_package.html) command:
+
+```cmake
+find_package(Mylib 1.0 REQUIRED)
+
+add_executable(some_executable some.cpp sources.cpp)
+target_link_libraries(some_executable PRIVATE Mylib::myfeature)
+```
+
+`Mylib::mylib` library is used for the headers only, and `Mylib::myfeature` library is used when it is also needed to link with the `libmyfeature` library.
+
+### As a submodule
+
+The project can also be used by another project as a submodule using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html) command:
+
+In this case, libraries `Mylib::myfeature` and `Mylib::mylib` will be available in the same manner.
 
 Tools
 -----
