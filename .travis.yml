@@ -12,10 +12,10 @@ language: cpp
 
   - git clone https://github.com/onqtam/doctest.git third_party/doctest
   - git -C third_party/doctest checkout 2.3.3
-  - /usr/bin/cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - /usr/bin/cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - /usr/bin/cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - /usr/bin/cmake --build Build/mylib --target check
 
 .macos-job-template: &macos-job
@@ -28,10 +28,10 @@ language: cpp
   install:
   - git clone https://github.com/onqtam/doctest.git third_party/doctest
   - git -C third_party/doctest checkout 2.3.3
-  - cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release
+  - cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release
   - sudo cmake --build Build/third_party/doctest --target install/fast
   script:
-  - cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   - cmake --build Build/mylib --target check
 
 .coverage-job-template: &coverage-job
@@ -48,10 +48,10 @@ language: cpp
 
   - git clone https://github.com/onqtam/doctest.git third_party/doctest
   - git -C third_party/doctest checkout 2.3.3
-  - /usr/bin/cmake -BBuild/third_party/doctest -Hthird_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - /usr/bin/cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - /usr/bin/cmake -BBuild/mylib -H. -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
+  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=Debug -DMYLIB_COVERAGE=ON
   - /usr/bin/cmake --build Build/mylib --target coverage
   after_success:
   - coveralls --root . --build-root Build/mylib --include include --include src
