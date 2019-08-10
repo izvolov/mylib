@@ -91,8 +91,8 @@ cmake -S ... -B ... -DMYLIB_DOXYGEN_LANGUAGE=English [прочие опции ..
 ### По умолчанию
 
 ```shell
-cmake --build path/to/build/directory
-cmake --build path/to/build/directory --target all
+cmake --build путь/к/сборочной/директории
+cmake --build путь/к/сборочной/директории --target all
 ```
 
 Если цель не указана (что эквивалентно цели `all`), собирает всё, что можно, а также вызывает цель [`check`](#check).
@@ -108,7 +108,7 @@ cmake --build путь/к/сборочной/директории --target myfea
 ### mylib-unit-tests
 
 ```shell
-cmake --build path/to/build/directory --target mylib-unit-tests
+cmake --build путь/к/сборочной/директории --target mylib-unit-tests
 ```
 
 Компилирует модульные тесты. Включено по умолчанию.
