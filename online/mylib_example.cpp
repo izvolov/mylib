@@ -2,5 +2,6 @@
 
 int main ()
 {
-    mylib::myfunc(mylib::mystruct{});
+    auto s = mylib::mystruct{};
+    static_cast<void>(s);
 }
