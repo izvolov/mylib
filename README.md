@@ -91,8 +91,8 @@ cmake -S ... -B ... -DMYLIB_DOXYGEN_LANGUAGE=English [прочие опции ..
 ### По умолчанию
 
 ```shell
-cmake --build path/to/build/directory
-cmake --build path/to/build/directory --target all
+cmake --build путь/к/сборочной/директории
+cmake --build путь/к/сборочной/директории --target all
 ```
 
 Если цель не указана (что эквивалентно цели `all`), собирает всё, что можно, а также вызывает цель [`check`](#check).
@@ -108,7 +108,7 @@ cmake --build путь/к/сборочной/директории --target myfea
 ### mylib-unit-tests
 
 ```shell
-cmake --build path/to/build/directory --target mylib-unit-tests
+cmake --build путь/к/сборочной/директории --target mylib-unit-tests
 ```
 
 Компилирует модульные тесты. Включено по умолчанию.
@@ -206,7 +206,7 @@ target_link_libraries(some_executable PRIVATE Mylib::myfeature)
 
 ### В качестве подмодуля
 
-Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html):
+Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
 В этом случае аналогичным образом будут доступны библиотеки `Mylib::myfeature` и `Mylib::mylib`.
 
