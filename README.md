@@ -5,7 +5,7 @@
 
 Скопировать, поменять "Mylib" на нужное название — и в путь.
 
-[![Статус сборки](https://travis-ci.org/izvolov/mylib.svg?branch=master)](https://travis-ci.org/izvolov/mylib) [![Статус покрытия](https://coveralls.io/repos/github/izvolov/mylib/badge.svg?branch=master)](https://coveralls.io/github/izvolov/mylib?branch=master) [![Попробовать онлайн на Wandbox.org](https://img.shields.io/badge/try-online-blue.svg)](https://wandbox.org/permlink/QElvxuMzHgL9fqci)
+[![Статус сборки](https://travis-ci.org/izvolov/mylib.svg?branch=master)](https://travis-ci.org/izvolov/mylib) [![Статус сборки под Виндой](https://ci.appveyor.com/api/projects/status/github/izvolov/mylib?branch=master&svg=true)](https://ci.appveyor.com/project/izvolov/mylib/branch/master) [![Статус покрытия](https://coveralls.io/repos/github/izvolov/mylib/badge.svg?branch=master)](https://coveralls.io/github/izvolov/mylib?branch=master) [![Попробовать онлайн на Wandbox.org](https://img.shields.io/badge/try-online-blue.svg)](https://wandbox.org/permlink/QElvxuMzHgL9fqci)
 
 
 Содержание
