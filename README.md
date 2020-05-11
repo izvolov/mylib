@@ -17,7 +17,7 @@
 2.  [Опции](#опции)
     1.  [MYLIB_COVERAGE](#MYLIB_COVERAGE)
     2.  [MYLIB_TESTING](#MYLIB_TESTING)
-    3.  [MYLIB_DOXYGEN_LANGUAGE](#MYLIB_DOXYGEN_LANGUAGE)
+    3.  [DOXYGEN_OUTPUT_LANGUAGE](#DOXYGEN_OUTPUT_LANGUAGE)
 3.  [Сборочные цели](#сборочные-цели)
     1.  [По умолчанию](#по-умолчанию)
     2.  [myfeature](#myfeature)
@@ -75,10 +75,10 @@ cmake -S ... -B ... -DMYLIB_TESTING=OFF [прочие опции ...]
 
 Также тестирование автоматически отключается в случае, если проект подключается в другой проект качестве подпроекта с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
-### MYLIB_DOXYGEN_LANGUAGE
+### DOXYGEN_OUTPUT_LANGUAGE
 
 ```shell
-cmake -S ... -B ... -DMYLIB_DOXYGEN_LANGUAGE=English [прочие опции ...]
+cmake -S ... -B ... -DDOXYGEN_OUTPUT_LANGUAGE=English [прочие опции ...]
 ```
 
 Переключает язык документации, которую генерирует цель [`doc`](#doc) на заданный. Список доступных языков см. на [сайте системы Doxygen](http://www.doxygen.nl/manual/config.html#cfg_output_language).
@@ -178,7 +178,7 @@ cmake --build путь/к/сборочной/директории --parallel 4
 #### Генерирование документации на английском
 
 ```shell
-cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Release -DMYLIB_DOXYGEN_LANGUAGE=English
+cmake -S путь/к/исходникам -B путь/к/сборочной/директории -DCMAKE_BUILD_TYPE=Release -DDOXYGEN_OUTPUT_LANGUAGE=English
 cmake --build путь/к/сборочной/директории --target doc
 ```
 
@@ -223,7 +223,7 @@ target_link_libraries(some_executable PRIVATE Mylib::myfeature)
 
 3.  [Doxygen](http://doxygen.nl)
 
-    Для переключения языка, на котором будет сгенерирована документация, предусмотрена опция [`MYLIB_DOXYGEN_LANGUAGE`](#MYLIB_DOXYGEN_LANGUAGE).
+    Для переключения языка, на котором будет сгенерирована документация, предусмотрена опция [`DOXYGEN_OUTPUT_LANGUAGE`](#DOXYGEN_OUTPUT_LANGUAGE).
 
 4.  Интерпретатор ЯП [Python 3](https://www.python.org)
 
