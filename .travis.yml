@@ -51,10 +51,10 @@ language: cpp
   - /usr/bin/cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=Debug -DAWESOMEPROJECT_COVERAGE=ON -DAWESOMEPROJECT_TESTING=ON -DNEW_PROJECT_NAME=AwesomeProject
+  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=Debug -DAWESOMEPROJECT_COVERAGE=ON -DAWESOMEPROJECT_TESTING=ON -DNEW_PROJECT_NAME=AwesomeProject -DOUTPUT_ROOT=Gen -DNEW_PROJECT_BUILD_DIR=Build/Gen/AwesomeProject
   - /usr/bin/cmake --build Build/mylib --target coverage
   after_success:
-  - coveralls --root . --build-root Build/mylib --include include --include src
+  - coveralls --root Gen/AwesomeProject --build-root Build/Gen/AwesomeProject --include include --include src
 
 matrix:
   include:

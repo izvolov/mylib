@@ -13,7 +13,7 @@ project(LibGen VERSION 1.0 LANGUAGES CXX)
 ##
 ###################################################################################################
 
-if (NOT NEW_PROJECT_NAME)
+if (NOT DEFINED NEW_PROJECT_NAME)
     message(WARNING
         "Название проекта не выбрано, будет использовано название \"Mylib\"."
         "Чтобы установить название проекта, воспользуйтесь опцией NEW_PROJECT_NAME:\n"
@@ -29,14 +29,18 @@ message(STATUS "Название проекта: ${NEW_PROJECT_NAME}")
 message(STATUS "Название проекта в нижнем регистре: ${NEW_PROJECT_NAME_LOWER}")
 message(STATUS "Название проекта в верхнем регистре: ${NEW_PROJECT_NAME_UPPER}")
 
-if (NOT OUTPUT_ROOT)
+if (NOT DEFINED OUTPUT_ROOT)
     message(WARNING
         "Не выбрана директория, в которую будут установлен сгенерированный проект."
         "Проект будет положен в текущую сборочную директорию."
         "Чтобы установить директорию, воспользуйтесь опцией OUTPUT_ROOT:\n"
         "\tcmake -DOUTPUT_ROOT=<directory> ..."
     )
-    set(OUTPUT_ROOT ${CMAKE_CURRENT_BINARY_DIR}/${NEW_PROJECT_NAME_LOWER})
+    set(OUTPUT_ROOT ${CMAKE_CURRENT_BINARY_DIR})
+endif()
+
+if (NOT DEFINED NEW_PROJECT_BUILD_DIR)
+    set(NEW_PROJECT_BUILD_DIR build)
 endif()
 
 ###################################################################################################
@@ -45,8 +49,7 @@ endif()
 ##
 ###################################################################################################
 
-set(NEW_PROJECT_DIRECTORY ${OUTPUT_ROOT}/${NEW_PROJECT_NAME_LOWER})
-
+set(NEW_PROJECT_DIRECTORY ${OUTPUT_ROOT}/${NEW_PROJECT_NAME})
 message(STATUS "Файлы проекта будут записаны в директорию ${NEW_PROJECT_DIRECTORY}")
 
 add_subdirectory(templates)
@@ -57,4 +60,6 @@ add_subdirectory(templates)
 ##
 ###################################################################################################
 
-add_subdirectory(${NEW_PROJECT_DIRECTORY} build)
+message(STATUS "Сгенерированный проект будет собираться в директории ${NEW_PROJECT_BUILD_DIR}")
+
+add_subdirectory(${NEW_PROJECT_DIRECTORY} ${NEW_PROJECT_BUILD_DIR})
