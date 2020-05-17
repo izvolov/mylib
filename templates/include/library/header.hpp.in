@@ -1,6 +1,6 @@
 #pragma once
 
-namespace mylib
+namespace @NEW_PROJECT_NAME_LOWER@
 {
     /*!
         \~english
@@ -17,9 +17,9 @@ namespace mylib
             \details
                 Для демонстрации автодокументирования.
 
-        \~  \see myfunc
+        \~  \see function
      */
-    struct mystruct
+    struct structure
     {
     };
 
@@ -44,7 +44,7 @@ namespace mylib
             \returns
                 Истину.
 
-        \~  \see mystruct
+        \~  \see structure
      */
-    bool myfunc (mystruct);
+    bool function (structure);
 }

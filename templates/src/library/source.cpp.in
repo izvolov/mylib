@@ -1,0 +1,9 @@
+#include <@NEW_PROJECT_NAME_LOWER@/header.hpp>
+
+namespace @NEW_PROJECT_NAME_LOWER@
+{
+    bool function (structure)
+    {
+        return true;
+    }
+}

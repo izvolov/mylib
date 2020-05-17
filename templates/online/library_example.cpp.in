@@ -1,0 +1,7 @@
+#include <@NEW_PROJECT_NAME_LOWER@/header.hpp>
+
+int main ()
+{
+    auto s = @NEW_PROJECT_NAME_LOWER@::structure{};
+    static_cast<void>(s);
+}

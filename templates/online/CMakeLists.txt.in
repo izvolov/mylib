@@ -4,12 +4,12 @@ if(Python3_FOUND)
 
     add_custom_target(wandbox
         COMMAND
-            Python3::Interpreter wandbox.py mylib_example.cpp "${PROJECT_SOURCE_DIR}" include |
+            Python3::Interpreter wandbox.py @NEW_PROJECT_NAME_LOWER@_example.cpp "${PROJECT_SOURCE_DIR}" include |
             curl -H "Content-type: application/json" -d @- ${WANDBOX_URL}
         WORKING_DIRECTORY
             ${CMAKE_CURRENT_SOURCE_DIR}
         DEPENDS
-            mylib-unit-tests
+            @NEW_PROJECT_NAME_LOWER@-unit-tests
     )
 else()
     message(WARNING "Для создания онлайн-песочницы требуется интерпретатор ЯП python 3-й версии")
