@@ -17,8 +17,8 @@ install:
 - cmake --build Build\third_party\doctest --config Release --target install
 
 build_script:
-- cmake -S . -B Build\mylib -A %PLATFORM% -DNEW_PROJECT_NAME=AwesomeLibrary -DAWESOMEPROJECT_TESTING=ON
-- cmake --build Build\mylib --config %CONFIGURATION% --target awesomelibrary-unit-tests
+- cmake -S . -B Build\mylib -A %PLATFORM% -DNEW_PROJECT_NAME=AwesomeProject -DAWESOMEPROJECT_TESTING=ON
+- cmake --build Build\mylib --config %CONFIGURATION% --target awesomeproject-unit-tests
 
 test_script:
 - cmake --build Build\mylib --config %CONFIGURATION% --target check
