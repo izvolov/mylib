@@ -39,10 +39,6 @@ if (NOT DEFINED OUTPUT_ROOT)
     set(OUTPUT_ROOT ${CMAKE_CURRENT_BINARY_DIR})
 endif()
 
-if (NOT DEFINED NEW_PROJECT_BUILD_DIR)
-    set(NEW_PROJECT_BUILD_DIR build)
-endif()
-
 ###################################################################################################
 ##
 ##      Генерация
@@ -60,6 +56,4 @@ add_subdirectory(templates)
 ##
 ###################################################################################################
 
-message(STATUS "Сгенерированный проект будет собираться в директории ${NEW_PROJECT_BUILD_DIR}")
-
-add_subdirectory(${NEW_PROJECT_DIRECTORY} ${NEW_PROJECT_BUILD_DIR})
+add_subdirectory(${NEW_PROJECT_DIRECTORY} build-${NEW_PROJECT_NAME})
