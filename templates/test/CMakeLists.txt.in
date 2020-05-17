@@ -15,8 +15,8 @@ if(@NEW_PROJECT_NAME_UPPER@_COVERAGE AND GCOVR_EXECUTABLE)
     target_compile_options(@NEW_PROJECT_NAME_LOWER@-unit-tests PRIVATE --coverage)
     target_link_libraries(@NEW_PROJECT_NAME_LOWER@-unit-tests PRIVATE gcov)
 
-    target_compile_options(@NEW_PROJECT_NAME_LOWER@ PRIVATE --coverage)
-    target_link_libraries(@NEW_PROJECT_NAME_LOWER@ PRIVATE gcov)
+    target_compile_options(@NEW_PROJECT_NAME_LOWER@_library PRIVATE --coverage)
+    target_link_libraries(@NEW_PROJECT_NAME_LOWER@_library PRIVATE gcov)
 
     add_custom_target(coverage
         COMMAND
