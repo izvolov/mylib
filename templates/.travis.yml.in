@@ -15,8 +15,8 @@ language: cpp
   - /usr/bin/cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME -DNEW_PROJECT_NAME=AwesomeProject -DAWESOMEPROJECT_TESTING=ON
-  - /usr/bin/cmake --build Build/mylib --target check
+  - /usr/bin/cmake -S . -B Build/@NEW_PROJECT_NAME_LOWER@ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=$COMPILER_NAME
+  - /usr/bin/cmake --build Build/@NEW_PROJECT_NAME_LOWER@ --target check
 
 .macos-job-template: &macos-job
   os: osx
@@ -31,8 +31,8 @@ language: cpp
   - cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release
   - sudo cmake --build Build/third_party/doctest --target install/fast
   script:
-  - cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DNEW_PROJECT_NAME=AwesomeProject -DAWESOMEPROJECT_TESTING=ON
-  - cmake --build Build/mylib --target check
+  - cmake -S . -B Build/@NEW_PROJECT_NAME_LOWER@ -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  - cmake --build Build/@NEW_PROJECT_NAME_LOWER@ --target check
 
 .coverage-job-template: &coverage-job
   os: linux
@@ -51,10 +51,10 @@ language: cpp
   - /usr/bin/cmake -S third_party/doctest -B Build/third_party/doctest -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=$COMPILER_NAME
   - sudo /usr/bin/cmake --build Build/third_party/doctest --target install/fast
   script:
-  - /usr/bin/cmake -S . -B Build/mylib -DCMAKE_BUILD_TYPE=Debug -DAWESOMEPROJECT_COVERAGE=ON -DAWESOMEPROJECT_TESTING=ON -DNEW_PROJECT_NAME=AwesomeProject
-  - /usr/bin/cmake --build Build/mylib --target coverage
+  - /usr/bin/cmake -S . -B Build/@NEW_PROJECT_NAME_LOWER@ -DCMAKE_BUILD_TYPE=Debug -D@NEW_PROJECT_NAME_UPPER@_COVERAGE=ON
+  - /usr/bin/cmake --build Build/@NEW_PROJECT_NAME_LOWER@ --target coverage
   after_success:
-  - coveralls --root . --build-root Build/mylib --include include --include src
+  - coveralls --root . --build-root Build/@NEW_PROJECT_NAME_LOWER@ --include include --include src
 
 matrix:
   include:

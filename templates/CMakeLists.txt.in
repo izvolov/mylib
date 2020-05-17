@@ -1,0 +1,155 @@
+###################################################################################################
+##
+##      Информация о проекте
+##
+###################################################################################################
+
+cmake_minimum_required(VERSION 3.14)
+project(@NEW_PROJECT_NAME@ VERSION 1.0 LANGUAGES CXX)
+
+get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
+
+###################################################################################################
+##
+##      Опции проекта
+##
+###################################################################################################
+
+if (IS_SUBPROJECT AND NOT DEFINED @NEW_PROJECT_NAME_UPPER@_TESTING)
+    message(STATUS "@NEW_PROJECT_NAME@ не тестируется в режиме подмодуля")
+    set(@NEW_PROJECT_NAME_UPPER@_TESTING OFF)
+endif()
+
+if (IS_SUBPROJECT AND NOT DEFINED @NEW_PROJECT_NAME_UPPER@_DOC)
+    message(STATUS "Автодокументация для @NEW_PROJECT_NAME@ выключена в режиме подмодуля")
+    set(@NEW_PROJECT_NAME_UPPER@_DOC OFF)
+endif()
+
+if (IS_SUBPROJECT AND NOT DEFINED @NEW_PROJECT_NAME_UPPER@_WANDBOX)
+    message(STATUS "Онлайн-песочница для @NEW_PROJECT_NAME@ выключена в режиме подмодуля")
+    set(@NEW_PROJECT_NAME_UPPER@_WANDBOX OFF)
+endif()
+
+option(@NEW_PROJECT_NAME_UPPER@_TESTING "Включить модульное тестирование" ON)
+option(@NEW_PROJECT_NAME_UPPER@_COVERAGE "Включить измерение покрытия кода тестами" OFF)
+option(@NEW_PROJECT_NAME_UPPER@_DOC "Включить документирование" ON)
+option(@NEW_PROJECT_NAME_UPPER@_WANDBOX "Включить онлайн-песочницу" ON)
+
+###################################################################################################
+##
+##      Опции компиляции
+##
+###################################################################################################
+
+if((CMAKE_CXX_COMPILER_ID MATCHES "GNU") OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+    add_compile_options(
+        -Werror
+
+        -Wall
+        -Wextra
+        -Wpedantic
+
+        -Wcast-align
+        -Wcast-qual
+        -Wconversion
+        -Wctor-dtor-privacy
+        -Wenum-compare
+        -Wfloat-equal
+        -Wnon-virtual-dtor
+        -Wold-style-cast
+        -Woverloaded-virtual
+        -Wredundant-decls
+        -Wsign-conversion
+        -Wsign-promo
+    )
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    add_compile_options(/W4 /WX)
+endif()
+
+if(NOT CMAKE_CXX_EXTENSIONS)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+endif()
+
+###################################################################################################
+##
+##      Заголовочная библиотека
+##
+###################################################################################################
+
+add_library(@NEW_PROJECT_NAME_LOWER@_headers INTERFACE)
+target_include_directories(@NEW_PROJECT_NAME_LOWER@_headers INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+target_compile_features(@NEW_PROJECT_NAME_LOWER@_headers INTERFACE cxx_std_17)
+set_target_properties(@NEW_PROJECT_NAME_LOWER@_headers PROPERTIES EXPORT_NAME headers)
+
+add_library(@NEW_PROJECT_NAME@::headers ALIAS @NEW_PROJECT_NAME_LOWER@_headers)
+
+###################################################################################################
+##
+##      Компилируемая библиотека
+##
+###################################################################################################
+
+add_library(@NEW_PROJECT_NAME_LOWER@_library src/@NEW_PROJECT_NAME_LOWER@/source.cpp)
+target_link_libraries(@NEW_PROJECT_NAME_LOWER@_library PUBLIC @NEW_PROJECT_NAME_LOWER@_headers)
+set_target_properties(@NEW_PROJECT_NAME_LOWER@_library PROPERTIES EXPORT_NAME library)
+
+add_library(@NEW_PROJECT_NAME@::library ALIAS @NEW_PROJECT_NAME_LOWER@_library)
+
+###################################################################################################
+##
+##      Установка
+##
+###################################################################################################
+
+install(DIRECTORY include/@NEW_PROJECT_NAME_LOWER@ DESTINATION include)
+
+install(TARGETS @NEW_PROJECT_NAME_LOWER@_headers @NEW_PROJECT_NAME_LOWER@_library EXPORT @NEW_PROJECT_NAME@Config)
+install(EXPORT @NEW_PROJECT_NAME@Config NAMESPACE @NEW_PROJECT_NAME@:: DESTINATION share/@NEW_PROJECT_NAME@/cmake)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("${PROJECT_BINARY_DIR}/@NEW_PROJECT_NAME@ConfigVersion.cmake"
+    VERSION
+        ${PROJECT_VERSION}
+    COMPATIBILITY
+        AnyNewerVersion
+)
+install(FILES "${PROJECT_BINARY_DIR}/@NEW_PROJECT_NAME@ConfigVersion.cmake" DESTINATION share/@NEW_PROJECT_NAME@/cmake)
+
+###################################################################################################
+##
+##      Тесты
+##
+###################################################################################################
+
+if(NOT @NEW_PROJECT_NAME_UPPER@_TESTING)
+    message(STATUS "Тестирование проекта @NEW_PROJECT_NAME@ выключено")
+else()
+    add_subdirectory(test)
+endif()
+
+###################################################################################################
+##
+##      Документация
+##
+###################################################################################################
+
+if(NOT @NEW_PROJECT_NAME_UPPER@_DOC)
+    message(STATUS "Автодокументация проекта @NEW_PROJECT_NAME@ выключена")
+else()
+    add_subdirectory(doc)
+endif()
+
+###################################################################################################
+##
+##      Онлайн-песочница
+##
+###################################################################################################
+
+if(NOT @NEW_PROJECT_NAME_UPPER@_WANDBOX)
+    message(STATUS "Онлайн-песочница для проекта @NEW_PROJECT_NAME@ выключена")
+else()
+    add_subdirectory(online)
+endif()

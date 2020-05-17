@@ -5,130 +5,56 @@
 ###################################################################################################
 
 cmake_minimum_required(VERSION 3.14)
-project(Mylib VERSION 1.0 LANGUAGES CXX)
-
-get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
+project(LibGen VERSION 1.0 LANGUAGES CXX)
 
 ###################################################################################################
 ##
-##      Опции проекта
+##      Опции
 ##
 ###################################################################################################
 
-option(MYLIB_TESTING "Включить модульное тестирование" ON)
-option(MYLIB_COVERAGE "Включить измерение покрытия кода тестами" OFF)
-
-###################################################################################################
-##
-##      Опции компиляции
-##
-###################################################################################################
-
-if((CMAKE_CXX_COMPILER_ID MATCHES "GNU") OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
-    add_compile_options(
-        -Werror
-
-        -Wall
-        -Wextra
-        -Wpedantic
-
-        -Wcast-align
-        -Wcast-qual
-        -Wconversion
-        -Wctor-dtor-privacy
-        -Wenum-compare
-        -Wfloat-equal
-        -Wnon-virtual-dtor
-        -Wold-style-cast
-        -Woverloaded-virtual
-        -Wredundant-decls
-        -Wsign-conversion
-        -Wsign-promo
+if (NOT NEW_PROJECT_NAME)
+    message(WARNING
+        "Название проекта не выбрано, будет использовано название \"Mylib\"."
+        "Чтобы установить название проекта, воспользуйтесь опцией NEW_PROJECT_NAME:\n"
+        "\tcmake -DNEW_PROJECT_NAME=<name> ..."
     )
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_compile_options(/W4 /WX)
+    set(NEW_PROJECT_NAME Mylib)
 endif()
 
-if(NOT CMAKE_CXX_EXTENSIONS)
-    set(CMAKE_CXX_EXTENSIONS OFF)
-endif()
+string(TOLOWER ${NEW_PROJECT_NAME} NEW_PROJECT_NAME_LOWER)
+string(TOUPPER ${NEW_PROJECT_NAME} NEW_PROJECT_NAME_UPPER)
 
-###################################################################################################
-##
-##      Заголовочная библиотека
-##
-###################################################################################################
+message(STATUS "Название проекта: ${NEW_PROJECT_NAME}")
+message(STATUS "Название проекта в нижнем регистре: ${NEW_PROJECT_NAME_LOWER}")
+message(STATUS "Название проекта в верхнем регистре: ${NEW_PROJECT_NAME_UPPER}")
 
-add_library(mylib INTERFACE)
-target_include_directories(mylib INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
-target_compile_features(mylib INTERFACE cxx_std_17)
-
-add_library(Mylib::mylib ALIAS mylib)
-
-###################################################################################################
-##
-##      Компилируемая библиотека
-##
-###################################################################################################
-
-add_library(myfeature src/mylib/myfeature.cpp)
-target_link_libraries(myfeature PUBLIC mylib)
-
-add_library(Mylib::myfeature ALIAS myfeature)
-
-###################################################################################################
-##
-##      Установка
-##
-###################################################################################################
-
-install(DIRECTORY include/mylib DESTINATION include)
-
-install(TARGETS mylib myfeature EXPORT MylibConfig)
-install(EXPORT MylibConfig NAMESPACE Mylib:: DESTINATION share/Mylib/cmake)
-
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${PROJECT_BINARY_DIR}/MylibConfigVersion.cmake"
-    VERSION
-        ${PROJECT_VERSION}
-    COMPATIBILITY
-        AnyNewerVersion
-)
-install(FILES "${PROJECT_BINARY_DIR}/MylibConfigVersion.cmake" DESTINATION share/Mylib/cmake)
-
-###################################################################################################
-##
-##      Тесты
-##
-###################################################################################################
-
-if(NOT MYLIB_TESTING)
-    message(STATUS "Тестирование проекта Mylib выключено")
-elseif(IS_SUBPROJECT)
-    message(STATUS "Mylib не тестируется в режиме подмодуля")
-else()
-    add_subdirectory(test)
+if (NOT OUTPUT_ROOT)
+    message(WARNING
+        "Не выбрана директория, в которую будут установлен сгенерированный проект."
+        "Проект будет положен в текущую сборочную директорию."
+        "Чтобы установить директорию, воспользуйтесь опцией OUTPUT_ROOT:\n"
+        "\tcmake -DOUTPUT_ROOT=<directory> ..."
+    )
+    set(OUTPUT_ROOT ${CMAKE_CURRENT_BINARY_DIR}/${NEW_PROJECT_NAME_LOWER})
 endif()
 
 ###################################################################################################
 ##
-##      Документация
+##      Генерация
 ##
 ###################################################################################################
 
-if(NOT IS_SUBPROJECT)
-    add_subdirectory(doc)
-endif()
+set(NEW_PROJECT_DIRECTORY ${OUTPUT_ROOT}/${NEW_PROJECT_NAME_LOWER})
+
+message(STATUS "Файлы проекта будут записаны в директорию ${NEW_PROJECT_DIRECTORY}")
+
+add_subdirectory(templates)
 
 ###################################################################################################
 ##
-##      Онлайн-песочница
+##      Сборка проекта
 ##
 ###################################################################################################
 
-if(NOT IS_SUBPROJECT)
-    add_subdirectory(online)
-endif()
+add_subdirectory(${NEW_PROJECT_DIRECTORY} build)

@@ -1,0 +1,8 @@
+#include <@NEW_PROJECT_NAME_LOWER@/header.hpp>
+
+#include <doctest/doctest.h>
+
+TEST_CASE("Функция function делает классные штуки со структурой structure")
+{
+    CHECK(@NEW_PROJECT_NAME_LOWER@::function(@NEW_PROJECT_NAME_LOWER@::structure{}));
+}
