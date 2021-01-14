@@ -1,0 +1,36 @@
+name: Windows
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2019]
+        platform: [Win32, x64]
+        build_type: ["Debug", "Release"]
+
+    runs-on: ${{matrix.os}}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install doctest
+      run: |
+        git clone https://github.com/onqtam/doctest.git third_party\doctest
+        git -C third_party\doctest checkout 2.3.3
+        cmake -S third_party\doctest -B Build\third_party\doctest -A ${{matrix.platform}} -DDOCTEST_WITH_TESTS=OFF
+        cmake --build Build\third_party\doctest --config Release --target install
+
+    - name: Configure and build
+      run: |
+        cmake -S . -B Build\mylib -A ${{matrix.platform}}
+        cmake --build Build\mylib --config ${{matrix.build_type}} --target mylib-unit-tests
+
+    - name: Test
+      run: |
+        cmake --build Build\mylib --config ${{matrix.build_type}} --target check
