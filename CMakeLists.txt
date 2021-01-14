@@ -15,8 +15,25 @@ get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
 ##
 ###################################################################################################
 
+if (IS_SUBPROJECT AND NOT DEFINED MYLIB_TESTING)
+    message(STATUS "Mylib не тестируется в режиме подмодуля")
+    set(MYLIB_TESTING OFF)
+endif()
+
+if (IS_SUBPROJECT AND NOT DEFINED MYLIB_DOC)
+    message(STATUS "Автодокументация для Mylib выключена в режиме подмодуля")
+    set(MYLIB_DOC OFF)
+endif()
+
+if (IS_SUBPROJECT AND NOT DEFINED MYLIB_WANDBOX)
+    message(STATUS "Онлайн-песочница для Mylib выключена в режиме подмодуля")
+    set(MYLIB_WANDBOX OFF)
+endif()
+
 option(MYLIB_TESTING "Включить модульное тестирование" ON)
 option(MYLIB_COVERAGE "Включить измерение покрытия кода тестами" OFF)
+option(MYLIB_DOC "Включить документирование" ON)
+option(MYLIB_WANDBOX "Включить онлайн-песочницу" ON)
 
 ###################################################################################################
 ##
@@ -107,8 +124,6 @@ install(FILES "${PROJECT_BINARY_DIR}/MylibConfigVersion.cmake" DESTINATION share
 
 if(NOT MYLIB_TESTING)
     message(STATUS "Тестирование проекта Mylib выключено")
-elseif(IS_SUBPROJECT)
-    message(STATUS "Mylib не тестируется в режиме подмодуля")
 else()
     add_subdirectory(test)
 endif()
@@ -119,7 +134,9 @@ endif()
 ##
 ###################################################################################################
 
-if(NOT IS_SUBPROJECT)
+if(NOT MYLIB_DOC)
+    message(STATUS "Автодокументация проекта Mylib выключена")
+else()
     add_subdirectory(doc)
 endif()
 
@@ -129,6 +146,8 @@ endif()
 ##
 ###################################################################################################
 
-if(NOT IS_SUBPROJECT)
+if(NOT MYLIB_WANDBOX)
+    message(STATUS "Онлайн-песочница для проекта Mylib выключена")
+else()
     add_subdirectory(online)
 endif()
