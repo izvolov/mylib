@@ -4,7 +4,7 @@ add_executable(mylib-unit-tests test_main.cpp)
 target_sources(mylib-unit-tests PRIVATE mylib/test.cpp)
 target_link_libraries(mylib-unit-tests
     PRIVATE
-        Mylib::myfeature
+        Mylib::library
         doctest::doctest
 )
 
@@ -15,8 +15,8 @@ if(MYLIB_COVERAGE AND GCOVR_EXECUTABLE)
     target_compile_options(mylib-unit-tests PRIVATE --coverage)
     target_link_libraries(mylib-unit-tests PRIVATE gcov)
 
-    target_compile_options(myfeature PRIVATE --coverage)
-    target_link_libraries(myfeature PRIVATE gcov)
+    target_compile_options(mylib_library PRIVATE --coverage)
+    target_link_libraries(mylib_library PRIVATE gcov)
 
     add_custom_target(coverage
         COMMAND

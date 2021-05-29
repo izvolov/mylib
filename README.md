@@ -19,7 +19,7 @@
     3.  [DOXYGEN_OUTPUT_LANGUAGE](#DOXYGEN_OUTPUT_LANGUAGE)
 3.  [Сборочные цели](#сборочные-цели)
     1.  [По умолчанию](#по-умолчанию)
-    2.  [myfeature](#myfeature)
+    2.  [mylib_library](#mylib_library)
     3.  [mylib-unit-tests](#mylib-unit-tests)
     4.  [check](#check)
     5.  [coverage](#coverage)
@@ -96,13 +96,13 @@ cmake --build путь/к/сборочной/директории --target all
 
 Если цель не указана (что эквивалентно цели `all`), собирает всё, что можно, а также вызывает цель [`check`](#check).
 
-### myfeature
+### mylib_library
 
 ```shell
-cmake --build путь/к/сборочной/директории --target myfeature
+cmake --build путь/к/сборочной/директории --target mylib_library
 ```
 
-Компилирует библиотеку `myfeature`. Включено по умолчанию.
+Компилирует библиотеку `mylib_library`. Включено по умолчанию.
 
 ### mylib-unit-tests
 
@@ -198,16 +198,16 @@ cmake --build путь/к/сборочной/директории --target insta
 find_package(Mylib 1.0 REQUIRED)
 
 add_executable(some_executable some.cpp sources.cpp)
-target_link_libraries(some_executable PRIVATE Mylib::myfeature)
+target_link_libraries(some_executable PRIVATE Mylib::library)
 ```
 
-Библиотеку `Mylib::myfeature` нужно подключать тогда, когда необходимо слинковаться с библиотекой `libmyfeature`. Если достаточно заголовков, то тогда стоит использовать библиотеку `Mylib::mylib`.
+Библиотеку `Mylib::library` нужно подключать тогда, когда необходимо слинковаться с библиотекой `libmylib_library`. Если достаточно заголовков, то тогда стоит использовать библиотеку `Mylib::headers`.
 
 ### В качестве подмодуля
 
 Также проект может быть подключён к другому проекту в качестве подмодуля с помощью команды [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html).
 
-В этом случае аналогичным образом будут доступны библиотеки `Mylib::myfeature` и `Mylib::mylib`.
+В этом случае аналогичным образом будут доступны библиотеки `Mylib::library` и `Mylib::headers`.
 
 Инструменты
 -----------

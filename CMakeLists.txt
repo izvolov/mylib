@@ -76,14 +76,14 @@ endif()
 ##
 ###################################################################################################
 
-add_library(mylib INTERFACE)
-target_include_directories(mylib INTERFACE
+add_library(mylib_headers INTERFACE)
+target_include_directories(mylib_headers INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-target_compile_features(mylib INTERFACE cxx_std_17)
+target_compile_features(mylib_headers INTERFACE cxx_std_17)
 
-add_library(Mylib::mylib ALIAS mylib)
+add_library(Mylib::headers ALIAS mylib_headers)
 
 ###################################################################################################
 ##
@@ -91,10 +91,10 @@ add_library(Mylib::mylib ALIAS mylib)
 ##
 ###################################################################################################
 
-add_library(myfeature src/mylib/source.cpp)
-target_link_libraries(myfeature PUBLIC mylib)
+add_library(mylib_library src/mylib/source.cpp)
+target_link_libraries(mylib_library PUBLIC mylib_headers)
 
-add_library(Mylib::myfeature ALIAS myfeature)
+add_library(Mylib::library ALIAS mylib_library)
 
 ###################################################################################################
 ##
@@ -104,7 +104,7 @@ add_library(Mylib::myfeature ALIAS myfeature)
 
 install(DIRECTORY include/mylib DESTINATION include)
 
-install(TARGETS mylib myfeature EXPORT MylibConfig)
+install(TARGETS mylib_headers mylib_library EXPORT MylibConfig)
 install(EXPORT MylibConfig NAMESPACE Mylib:: DESTINATION share/Mylib/cmake)
 
 include(CMakePackageConfigHelpers)
