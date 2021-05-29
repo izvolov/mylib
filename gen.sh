@@ -7,8 +7,8 @@
 ###################################################################################################
 
 if [[ $# -lt 2 || $# -gt 4 ]]; then
-    required="<path/to/new/library/directory> <LibraryName>"
-    optional="<lowercase_library_name> <UPPERCASE_LIBRARY_NAME>"
+    required="<path/to/new/project/directory> <ProjectName>"
+    optional="<lowercase_project_name> <UPPERCASE_PROJECT_NAME>"
     echo "Usage: $0 $required [$optional]"
     exit
 fi
@@ -19,31 +19,31 @@ fi
 #
 #--------------------------------------------------------------------------------------------------
 
-libname=$2
+project_name=$2
 
-echo "Library name would be \"$libname\""
+echo "Project name would be \"$project_name\""
 
 if [ -n "$3" ]; then
-    libname_lowercase=$3
-    echo "Lowercase library name would be \"$libname_lowercase\""
+    project_name_lowercase=$3
+    echo "Lowercase project name would be \"$project_name_lowercase\""
 else
-    libname_lowercase=$(echo "$libname" | tr "[:upper:]" "[:lower:]")
-    echo "Lowercase library name is not specified. \"$libname_lowercase\" will be used"
+    project_name_lowercase=$(echo "$project_name" | tr "[:upper:]" "[:lower:]")
+    echo "Lowercase project name is not specified. \"$project_name_lowercase\" will be used"
 fi
 
 if [ -n "$4" ]; then
-    libname_uppercase=$4
-    echo "Uppercase library name would be \"$libname_uppercase\""
+    project_name_uppercase=$4
+    echo "Uppercase project name would be \"$project_name_uppercase\""
 else
-    libname_uppercase=$(echo "$libname" | tr "[:lower:]" "[:upper:]")
-    echo "Uppercase library name is not specified. \"$libname_uppercase\" will be used"
+    project_name_uppercase=$(echo "$project_name" | tr "[:lower:]" "[:upper:]")
+    echo "Uppercase project name is not specified. \"$project_name_uppercase\" will be used"
 fi
 
-function replace_libname ()
+function replace_project_name ()
 {
-    sed "s/Mylib/$libname/g" |\
-    sed "s/mylib/$libname_lowercase/g" |\
-    sed "s/MYLIB/$libname_uppercase/g"\
+    sed "s/Mylib/$project_name/g" |\
+    sed "s/mylib/$project_name_lowercase/g" |\
+    sed "s/MYLIB/$project_name_uppercase/g"\
         < /dev/stdin
 }
 
@@ -53,12 +53,12 @@ function replace_libname ()
 #
 #--------------------------------------------------------------------------------------------------
 
-libpath=$1
-libdir=$libpath/$libname
+project_path=$1
+project_dir=$project_path/$project_name
 
-if [ -d "$libdir" ]; then
+if [ -d "$project_dir" ]; then
     while true; do
-        read -p "Directory $libdir already exists. Override it? (y/N): " choice
+        read -p "Directory $project_dir already exists. Override it? (y/N): " choice
         case $choice in
             [Yy] ) break;;
             [Nn] ) exit;;
@@ -67,8 +67,8 @@ if [ -d "$libdir" ]; then
     done
 fi
 
-echo "$libname would be placed into $libdir"
-mkdir -p $libdir
+echo "$project_name would be placed into $project_dir"
+mkdir -p $project_dir
 
 #--------------------------------------------------------------------------------------------------
 #
@@ -78,9 +78,9 @@ mkdir -p $libdir
 
 files=$(git ls-files)
 for file in $files; do
-    new_file=$(echo $file | replace_libname)
-    echo "Transforming $file into $libdir/$new_file"
-    mkdir -p $(dirname $libdir/$new_file)
-    cat $file | replace_libname > .${libname}_buffer_$$
-    mv .${libname}_buffer_$$ $libdir/$new_file
+    new_file=$(echo $file | replace_project_name)
+    echo "Transforming $file into $project_dir/$new_file"
+    mkdir -p $(dirname $project_dir/$new_file)
+    cat $file | replace_project_name > .${project_name}_buffer_$$
+    mv .${project_name}_buffer_$$ $project_dir/$new_file
 done
