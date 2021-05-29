@@ -91,7 +91,7 @@ add_library(Mylib::mylib ALIAS mylib)
 ##
 ###################################################################################################
 
-add_library(myfeature src/mylib/myfeature.cpp)
+add_library(myfeature src/mylib/source.cpp)
 target_link_libraries(myfeature PUBLIC mylib)
 
 add_library(Mylib::myfeature ALIAS myfeature)

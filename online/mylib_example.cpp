@@ -1,4 +1,4 @@
-#include <mylib/myfeature.hpp>
+#include <mylib/header.hpp>
 
 int main ()
 {

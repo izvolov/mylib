@@ -1,7 +1,7 @@
 find_package(doctest 2.3.3 REQUIRED)
 
 add_executable(mylib-unit-tests test_main.cpp)
-target_sources(mylib-unit-tests PRIVATE mylib/myfeature.cpp)
+target_sources(mylib-unit-tests PRIVATE mylib/test.cpp)
 target_link_libraries(mylib-unit-tests
     PRIVATE
         Mylib::myfeature
