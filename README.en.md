@@ -17,7 +17,7 @@ Contents
     3.  [DOXYGEN_OUTPUT_LANGUAGE](#DOXYGEN_OUTPUT_LANGUAGE)
 3.  [Targets](#targets)
     1.  [Default](#default)
-    2.  [myfeature](#myfeature)
+    2.  [mylib_library](#mylib_library)
     3.  [mylib-unit-tests](#mylib-unit-tests)
     4.  [check](#check)
     5.  [coverage](#coverage)
@@ -94,13 +94,13 @@ cmake --build path/to/build/directory --target all
 
 If a target is not specified (which is equivalent to the `all` target), it builds everything possible including unit tests and also calls the [`check`](#check) target.
 
-### myfeature
+### mylib_library
 
 ```shell
-cmake --build path/to/build/directory --target myfeature
+cmake --build path/to/build/directory --target mylib_library
 ```
 
-Compiles the `myfeature` library. Enabled by default.
+Compiles the `mylib_library` library. Enabled by default.
 
 ### mylib-unit-tests
 
@@ -196,16 +196,16 @@ After that, all the libraries from the `Mylib::` namespace can be used from any 
 find_package(Mylib 1.0 REQUIRED)
 
 add_executable(some_executable some.cpp sources.cpp)
-target_link_libraries(some_executable PRIVATE Mylib::myfeature)
+target_link_libraries(some_executable PRIVATE Mylib::library)
 ```
 
-`Mylib::mylib` library is used for the headers only, and `Mylib::myfeature` library is used when it is also needed to link with the `libmyfeature` library.
+`Mylib::headers` library is used for the headers only, and `Mylib::library` library is used when it is also needed to link with the `libmylib_library` library.
 
 ### As a submodule
 
 The project can also be used by another project as a submodule using the [`add_subdirectory`](https://cmake.org/cmake/help/v3.14/command/add_subdirectory.html) command:
 
-In this case, libraries `Mylib::myfeature` and `Mylib::mylib` will be available in the same manner.
+In this case, libraries `Mylib::library` and `Mylib::headers` will be available in the same manner.
 
 Tools
 -----
