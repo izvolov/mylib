@@ -13,10 +13,10 @@ if(MYLIB_COVERAGE AND GCOVR_EXECUTABLE)
     message(STATUS "Измерение покрытия кода тестами включено")
 
     target_compile_options(mylib-unit-tests PRIVATE --coverage)
-    target_link_libraries(mylib-unit-tests PRIVATE gcov)
+    target_link_options(mylib-unit-tests PRIVATE -fprofile-arcs)
 
     target_compile_options(mylib_library PRIVATE --coverage)
-    target_link_libraries(mylib_library PRIVATE gcov)
+    target_link_options(mylib_library PRIVATE -fprofile-arcs)
 
     add_custom_target(coverage
         COMMAND
