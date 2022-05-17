@@ -1,3 +1,11 @@
+add_executable(mylib-example mylib_example.cpp)
+target_link_libraries(mylib-example
+    PRIVATE
+        Mylib::library
+)
+
+add_custom_target(run-mylib-example ALL COMMAND mylib-example)
+
 find_package(Python3 COMPONENTS Interpreter)
 if(Python3_FOUND)
     set(WANDBOX_URL "https://wandbox.org/api/compile.json")
