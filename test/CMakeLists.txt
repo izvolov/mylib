@@ -1,4 +1,4 @@
-find_package(doctest 2.3.3 REQUIRED)
+include(${PROJECT_SOURCE_DIR}/cmake/doctest.cmake)
 
 add_executable(mylib-unit-tests test_main.cpp)
 target_sources(mylib-unit-tests PRIVATE mylib/test.cpp)
