@@ -3,7 +3,9 @@
 CMake-based template for C++ project
 ====================================
 
-Fork, replace "Mylib" with the desired name, and it's done.
+Clone, replace "Mylib" with the desired name, and it's done.
+
+Or generate a new project with a script: https://github.com/izvolov/mylib-gen/blob/master/README.en.md
 
 Contents
 --------

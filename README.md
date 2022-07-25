@@ -3,7 +3,9 @@
 Шаблон проекта на основе системы сборки CMake для языка C++
 ===========================================================
 
-Скопировать, поменять "Mylib" на нужное название — и в путь.
+Склонируйте и поменяйте "Mylib" на своё название.
+
+Либо сгенерируйте свой проект с помощью скрипта: https://github.com/izvolov/mylib-gen
 
 ![Статус сборки под Linux](https://github.com/izvolov/mylib/workflows/Linux/badge.svg) ![Статус сборки под macOS](https://github.com/izvolov/mylib/workflows/macOS/badge.svg) ![Статус сборки под Виндой](https://github.com/izvolov/mylib/workflows/Windows/badge.svg) [![Покрытие кода тестами](https://codecov.io/gh/izvolov/mylib/branch/master/graph/badge.svg)](https://codecov.io/gh/izvolov/mylib) [![Попробовать онлайн на Wandbox.org](https://img.shields.io/badge/try-online-blue.svg)](https://wandbox.org/permlink/QElvxuMzHgL9fqci)
 
