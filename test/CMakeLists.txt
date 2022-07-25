@@ -1,4 +1,18 @@
-find_package(doctest 2.3.3 REQUIRED)
+set(MYLIB_DOCTEST_VERSION 2.3.4)
+find_package(doctest ${MYLIB_DOCTEST_VERSION})
+if (doctest_FOUND)
+    message(STATUS "Найден doctest ${doctest_VERSION}: ${doctest_DIR}")
+else()
+    message(STATUS "doctest ${MYLIB_DOCTEST_VERSION} будет взят с гитхаба")
+    include(FetchContent)
+    FetchContent_Declare(doctest
+        GIT_REPOSITORY
+            https://github.com/doctest/doctest.git
+        GIT_TAG
+            ${MYLIB_DOCTEST_VERSION}
+    )
+    FetchContent_MakeAvailable(doctest)
+endif()
 
 add_executable(mylib-unit-tests test_main.cpp)
 target_sources(mylib-unit-tests PRIVATE mylib/test.cpp)
